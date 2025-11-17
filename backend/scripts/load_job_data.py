@@ -9,5 +9,5 @@ with open("backend/data/job_events.json", "r", encoding="utf-8") as f:
     events = json.load(f)
 
 for event in events:
-    job = event_service.handle_event(event)
-    print(job)
+    event_service.handle_event(event)
+

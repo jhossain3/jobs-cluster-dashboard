@@ -1,12 +1,14 @@
 # services/event_service.py
 from datetime import datetime
 from ..repository.job_repository import JobRepository
+from ..repository.fia_compliance_repository import FiaComplianceRepository
 from .auh_calculator import AUHCalculator
 
 
 class EventService:
     def __init__(self):
         self.repo = JobRepository()
+        self.fia_compliance_repository = FiaComplianceRepository()
 
     def handle_event(self, job):
         if job["event"] == "start":
@@ -20,14 +22,16 @@ class EventService:
                 "calculated_auh": 0.0
             }
             self.repo.add_job(job_doc)
-            return job_doc
 
         elif job["event"] == "completed":
-
-            existing_entry = self.repo.find_job(job["id"])
+            
+            existing_entry = self.repo.find_job(job["id"], job["type"])
+  
             end_time = datetime.fromisoformat(job["datetime"])
-            duration = end_time - existing_entry["start_time"] 
-            calculated_auh = AUHCalculator.calculate(job["type"], duration, "completed")
+            duration = end_time - existing_entry["start_time"]
+            calculated_auh = AUHCalculator.calculate(
+                existing_entry["type"], duration, job["event"]
+            )
             
             duration_hours = duration.total_seconds() / 3600
 
@@ -37,8 +41,13 @@ class EventService:
                 "duration": duration_hours,
                 "calculated_auh": calculated_auh
             }
-            self.repo.update_job(job["id"], updates)
-            return {**job, **updates}
-        
+            result = self.repo.update_job(job["id"], job["type"], updates)
+            
+            if result:
+                self.fia_compliance_repository.increment_total(
+                    start_time=existing_entry["start_time"],
+                    auh=calculated_auh
+                )
+                 
         else:
             return None
