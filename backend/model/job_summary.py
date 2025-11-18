@@ -8,5 +8,5 @@ class JobSummary:
     def to_dict(self):
         return {
             "totals_by_type": self.totals_by_type,
-            "overall_total": self.overall_total
+            "overall_total": self.overall_total,
         }

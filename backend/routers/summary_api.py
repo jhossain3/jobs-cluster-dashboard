@@ -6,13 +6,13 @@ router = APIRouter()
 
 
 @router.get("/report")
-def summary_report(
+async def summary_report(
     start_date: str = Query(..., description="ISO datetime string"),
     end_date: str = Query(..., description="ISO datetime string"),
 ):
     repo = SummaryRepository()
 
-    report = repo.get_summary(
+    report = await repo.get_summary(
         start_date=datetime.fromisoformat(start_date),
         end_date=datetime.fromisoformat(end_date),
     )

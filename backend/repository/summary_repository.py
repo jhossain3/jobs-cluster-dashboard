@@ -6,7 +6,7 @@ class SummaryRepository:
     def __init__(self):
         self.collection = jobs_collection
 
-    def get_summary(self, start_date, end_date):
+    async def get_summary(self, start_date, end_date):
         pipeline = [
             {"$match": {"start_time": {"$gte": start_date, "$lt": end_date}}},
             {
@@ -31,10 +31,12 @@ class SummaryRepository:
             },
         ]
 
-        results = list(jobs_collection.aggregate(pipeline))
+        cursor = self.collection.aggregate(pipeline)
+        results = await cursor.to_list(length=None)   # ✅ await Motor cursor
         return results[0] if results else {}
 
-# testing code 
+
+# testing code
 # if __name__ == "__main__":
 #     summary_repo = SummaryRepository()
 #     start_date = datetime.fromisoformat("2025-10-01T06:28:39")

@@ -44,14 +44,14 @@ const DashboardPage = () => {
   const fiaLimit = fiaData?.limit;
 
   useEffect(() => {
-    // 1️⃣ Fetch summary report
+    //  Fetch summary report
     fetchSummaryReport(today.toISOString(), startOfMonth.toISOString())
       .then((data) => {
         setSummary(data);
       })
       .catch((err) => console.error("Error fetching summary:", err));
 
-    // 2️⃣ Fetch compliance snapshot
+    // Fetch compliance snapshot
     fetch("http://localhost:8000/compliance/currentstatus")
       .then((res) => res.json())
       .then((data) => {
@@ -64,31 +64,40 @@ const DashboardPage = () => {
       })
       .catch((err) => console.error("Error fetching compliance status:", err));
 
-    // 3️⃣ Open WebSocket for live compliance updates
+    // Open WebSocket for live compliance updates
     const ws = new WebSocket("ws://localhost:8000/compliance/ws/limit");
 
     ws.onopen = () => {
-      console.log("WebSocket connected");
+      console.log("Connected!");
+      // send a ping every 30 seconds
+      setInterval(() => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send("ping");
+        }
+      }, 30000);
     };
 
     ws.onmessage = (event) => {
+      console.log('web socket triggered', event.data);
       try {
-        const data = JSON.parse(event.data);
-        console.log("WebSocket update:", data);
-        setCompliance(data); // update compliance state
-      } catch (err) {
-        console.error("Error parsing WS message:", err);
+        const parsed = JSON.parse(event.data);
+        console.log("Parsed:", parsed);
+
+        // Check for the broadcast flag
+        if (parsed.limit_exceeded_real_time_alert) {
+          // Trigger your popup and banner
+          console.log("AUH Limit Exceeded - Triggering popup and banner");
+          setShowPopup(true);
+          setShowBanner(false);
+
+        }
+      } catch {
+        console.log("Not JSON:", event.data);
       }
     };
 
-    ws.onclose = () => {
-      console.log("WebSocket closed");
-    };
-
-    // Cleanup on unmount
-    return () => {
-      ws.close();
-    };
+    ws.onclose = () => console.log("Closed");
+    ws.onerror = (err) => console.error("Error:", err);
   }, []);
   console.log("compliance state:", compliance);
   const handleSubmit = () => {
@@ -125,7 +134,7 @@ const DashboardPage = () => {
             <img
               src={mercedesAMGLogo}
               alt="Mercedes AMG Petronas"
-              style={{ height: 100 }}
+              style={{ height: 120 }}
             />
 
             <Typography align="center" variant="h6">
@@ -196,7 +205,6 @@ const DashboardPage = () => {
                 }
                 slotProps={{
                   textField: {
-                   
                     margin: "normal",
                   },
                 }}
@@ -211,7 +219,6 @@ const DashboardPage = () => {
                 }
                 slotProps={{
                   textField: {
-      
                     margin: "normal",
                   },
                 }}

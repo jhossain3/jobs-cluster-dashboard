@@ -7,13 +7,11 @@ class AUHCalculator:
         "solve": (256, 10.0),
         "postpro": (32, 5.0),
     }
-    
+
     ALLOWED_TYPES = {"solve"}
 
     @classmethod
-    def calculate(
-        cls, job_type: str, duration: timedelta, event: str
-    ) -> float:
+    def calculate(cls, job_type: str, duration: timedelta, event: str) -> float:
         if event != "completed":
             return 0.0
         if job_type not in cls.ALLOWED_TYPES or not duration:

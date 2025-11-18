@@ -1,7 +1,6 @@
-from pymongo import MongoClient
+from motor.motor_asyncio import AsyncIOMotorClient
 
-# Create a client connection to MongoDB
-client: MongoClient = MongoClient("mongodb://localhost:27017")
+client: AsyncIOMotorClient = AsyncIOMotorClient("mongodb://localhost:27017/?replicaSet=rs0")
 
 # Choose the database
 db = client["jobEventSystem"]
