@@ -17,6 +17,7 @@ const AuhPerTypeChart: React.FC<AuhPerTypeChartProps> = ({ auhPerType }) => {
     chart: { type: "bar" },
     xaxis: { categories },
     title: { text: "Task Counts" },
+    colors: ["#00A19B"]
   };
 
   const series = [{ name: "Values", data: values }];
