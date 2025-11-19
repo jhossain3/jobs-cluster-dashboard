@@ -89,5 +89,4 @@ due to time/resource constraints I was unable to implement the following:
 - global styling
 - further component modularisation such as DatePicker modal
 - security testing and safeguarding
-- 
 
