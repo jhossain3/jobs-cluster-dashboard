@@ -5,7 +5,7 @@ from backend.websocket_manager import websocket_clients  # import the list
 router = APIRouter()
 fia_compliance_repo = FiaComplianceRepository()
 
-
+#websocket endpoint for listening for FIA limit updates
 @router.websocket("/ws/limit")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
@@ -23,7 +23,7 @@ async def websocket_endpoint(websocket: WebSocket):
         if websocket in websocket_clients:
             websocket_clients.remove(websocket)
 
-
+# route for pulling current FIA compliance status
 @router.get("/currentstatus")
 async def get_current_status():
     return await fia_compliance_repo.get_fia_compliance_window()

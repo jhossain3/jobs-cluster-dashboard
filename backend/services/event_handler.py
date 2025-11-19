@@ -10,6 +10,10 @@ class EventService:
         self.repo = JobRepository()
         self.fia_compliance_repository = FiaComplianceRepository()
 
+# for each event handle start and completed events accordingly
+# when an event is "start", create a new job entry
+# when an event is "completed", update the existing job entry with end time, duration, and calculated AUH
+
     async def handle_event(self, job):
         if job["event"] == "start":
             job_doc = {

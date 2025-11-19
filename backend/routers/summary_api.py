@@ -4,7 +4,7 @@ from datetime import datetime
 
 router = APIRouter()
 
-
+#route to generate summary report on auh totals per type and overall total
 @router.get("/report")
 async def summary_report(
     start_date: str = Query(..., description="ISO datetime string"),

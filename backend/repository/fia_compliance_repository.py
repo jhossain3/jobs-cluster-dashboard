@@ -8,6 +8,7 @@ class FiaComplianceRepository:
         self.jobs_collection = jobs_collection
         self.fia_compliance_collection = fia_compliance_collection
 
+    # Get the current FIA compliance window for the current time
     async def get_fia_compliance_window(self):
         now = datetime.now(timezone.utc)
         fia_window = await self.get_fia_window(now)
@@ -22,6 +23,7 @@ class FiaComplianceRepository:
             }
         return {"message": "No active compliance window"}
 
+    #get the FIA window for a specific date
     async def get_fia_window(self, start_time: datetime):
         fia_window = await self.fia_compliance_collection.find_one(
             {"start_date": {"$lte": start_time}, "end_date": 
@@ -29,6 +31,7 @@ class FiaComplianceRepository:
         )
         return fia_window
 
+    # Increment the total AUH for the FIA compliance window that includes a given a date
     async def increment_total(self, start_time, auh):
         fia_window = await self.get_fia_window(start_time)
 

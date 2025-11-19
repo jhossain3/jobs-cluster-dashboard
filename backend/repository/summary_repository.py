@@ -6,6 +6,7 @@ class SummaryRepository:
     def __init__(self):
         self.collection = jobs_collection
 
+    #aggregate the auh totals by job type and overall total within a date range
     async def get_summary(self, start_date, end_date):
         pipeline = [
             {"$match": {"start_time": {"$gte": start_date, "$lt": end_date}}},
@@ -32,7 +33,7 @@ class SummaryRepository:
         ]
 
         cursor = self.collection.aggregate(pipeline)
-        results = await cursor.to_list(length=None)   # ✅ await Motor cursor
+        results = await cursor.to_list(length=None)  
         return results[0] if results else {}
 
 

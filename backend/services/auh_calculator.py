@@ -10,6 +10,7 @@ class AUHCalculator:
 
     ALLOWED_TYPES = {"solve"}
 
+# calculate the total auh for a job based on type, duration, and event only considering completed and solve events
     @classmethod
     def calculate(cls, job_type: str, duration: timedelta, event: str) -> float:
         if event != "completed":

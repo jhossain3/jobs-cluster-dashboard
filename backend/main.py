@@ -5,13 +5,13 @@ from backend.services.compliance_listener import watch_limit_exceeded
 from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 
-
+# Define lifespan event to start and stop the MongoDB change stream listener
 async def lifespan(app: FastAPI):
     # Startup
     task = asyncio.create_task(watch_limit_exceeded())
     print("Started MongoDB change stream listener")
 
-    yield  # <-- control returns to FastAPI while the app runs
+    yield  
 
     # Shutdown
     task.cancel()
@@ -27,6 +27,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include routers calling api endpoints
 
 app.include_router(summary_api.router, prefix="/summary")
 app.include_router(fia_compliance_api.router, prefix="/compliance")

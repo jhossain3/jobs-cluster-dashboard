@@ -1,5 +1,6 @@
 import { SummaryResponse } from "../types/summary";
 
+//call summary report endpoint with start and end date as query parameters
 export async function fetchSummaryReport(
   startDate: string,
   endDate: string

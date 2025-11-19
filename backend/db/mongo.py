@@ -1,5 +1,6 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 
+#connecting to the MongoDB replica set
 client: AsyncIOMotorClient = AsyncIOMotorClient("mongodb://localhost:27017/?replicaSet=rs0")
 
 # Choose the database

@@ -9,7 +9,7 @@ event_service = EventService()
 with open("backend/data/job_events.json", "r", encoding="utf-8") as f:
     events = json.load(f)
 
-
+# Process job events 
 async def main():
     for event in events:
         await event_service.handle_event(event)

@@ -1,4 +1,5 @@
-# domain/job.py
+# these models are unused but kept for reference as they are important to check the data before sending to the frontend
+
 from typing import Optional
 from datetime import datetime
 from services.auh_calculator import AUHCalculator
