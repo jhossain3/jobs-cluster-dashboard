@@ -99,7 +99,6 @@ const DashboardPage = () => {
     ws.onclose = () => console.log("Closed");
     ws.onerror = (err) => console.error("Error:", err);
   }, []);
-  console.log("compliance state:", compliance);
   const handleSubmit = () => {
     if (!startDate || !endDate) {
       console.error("Please select both dates");
@@ -112,7 +111,6 @@ const DashboardPage = () => {
 
     fetchSummaryReport(startIso, endIso)
       .then((data) => {
-        console.log("Fetched summary:", data);
         setSummary(data);
         setOpen(false); // close dialog after submit
       })
