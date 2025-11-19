@@ -29,7 +29,7 @@ docker exec -it mongodb mongosh
 rs.initiate()
 rs.status()
 cfg = rs.conf()
-cfg.members[0].host = "mongo:27017"
+cfg.members[0].host = "localhost:27017" 
 rs.reconfig(cfg, {force: true})
 
 
@@ -64,7 +64,7 @@ cd root
 uvicorn backend.main:app --reload
 
 ### 6. Load Job Data
-
+cd to the root:
 when you run this 
 python3 -m backend.scripts.load_job_data    
 
@@ -78,6 +78,31 @@ once you see the limit_exceeded field switch to true, this will automatically
 trigger a pop up in the frontend to alert the user the auh limit is exceeded which is
 replaced by a persistent banner onclose
 
+### 6. Testing 
+
+#### Backend 
+cd into the root:
+python -m pytest backend/tests -v
+
+all test suites have passed !
+
+tests include: 
+checking auh incrementor
+checking auh incrementor when the auh limit is hit
+calculating the total auh against dummy data
+verifying postpro and mesh return 0 for auh
+verifying the calculator correctly returns for a given duration on jobs
+verifying for given data the get_summary function is returning the correct aggregations 
+
+#### Frontend
+cd into frontend
+
+npm test 
+tests header element rendering in the Dashboard from App
+tests for given summary figures that the chart renders with expected x and y values
+all test suites passing
+
+
 Note: Parts of this project were developed with the assistance of GitHub Copilot and ChatGPT-5, which were used to help generate UI components (e.g., MUI) and streamline some utility functions. These tools accelerated the development process, but all generated code was reviewed, refined, and integrated manually.
 
 ## Limitations
@@ -90,4 +115,5 @@ due to time/resource constraints I was unable to implement the following:
 - global styling
 - further component modularisation such as DatePicker modal
 - security testing and safeguarding
+- further extensive front and backend testing 
 

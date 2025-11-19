@@ -44,6 +44,7 @@ const DashboardPage = () => {
   const fiaLimit = fiaData?.limit;
 
   useEffect(() => {
+
     //  Fetch summary report
     fetchSummaryReport(today.toISOString(), startOfMonth.toISOString())
       .then((data) => {
@@ -78,7 +79,7 @@ const DashboardPage = () => {
     };
 
     ws.onmessage = (event) => {
-      console.log('web socket triggered', event.data);
+      console.log("web socket triggered", event.data);
       try {
         const parsed = JSON.parse(event.data);
         console.log("Parsed:", parsed);
@@ -89,7 +90,6 @@ const DashboardPage = () => {
           console.log("AUH Limit Exceeded - Triggering popup and banner");
           setShowPopup(true);
           setShowBanner(false);
-
         }
       } catch {
         console.log("Not JSON:", event.data);
@@ -173,7 +173,7 @@ const DashboardPage = () => {
           onClose={handleClosePopup}
           sx={{ fontSize: "1.2rem", fontWeight: "bold" }}
         >
-          ⚠️ AUH Limit Exceeded! 
+          ⚠️ AUH Limit Exceeded!
         </Alert>
       </Snackbar>
 
