@@ -78,6 +78,7 @@ once you see the limit_exceeded field switch to true, this will automatically
 trigger a pop up in the frontend to alert the user the auh limit is exceeded which is
 replaced by a persistent banner onclose
 
+Note: Parts of this project were developed with the assistance of GitHub Copilot and ChatGPT-5, which were used to help generate UI components (e.g., MUI) and streamline some utility functions. These tools accelerated the development process, but all generated code was reviewed, refined, and integrated manually.
 
 ## Limitations
 
