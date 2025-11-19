@@ -5,9 +5,9 @@
 
 Hi Mercedes-AMG Petronas team,
 
-Welcome to my repo! It's been an immense privilege to reach this stage of the interview — thank you for the opportunity. I had a lot of fun working through this assignment. Yes, it kept me up at night… but honestly, what good coding problem doesn’t?
+Welcome to my repo! It's been an immense privilege to reach this stage of the interview — thank you for the opportunity. I had a lot of fun working through this assignment. Yes, it kept me up at night … but honestly, what good coding problem doesn’t?
 
-Designing something from the ground up, breaking things, fixing them, and iterating wildly over the span of a week was incredibly exciting — and gave me a tiny taste of what it must feel like to build cool things with your team.
+Designing something from the ground up, breaking things, fixing them, and iterating over the span of a week was incredibly exciting — and gave me a tiny taste of what it must feel like to build cool things with your team.
 
 Below you’ll find instructions for running the codebase, plus some notes on limitations I ran into with time and resources.
 
