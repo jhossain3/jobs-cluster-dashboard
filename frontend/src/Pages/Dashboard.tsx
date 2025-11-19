@@ -175,8 +175,7 @@ const DashboardPage = () => {
           onClose={handleClosePopup}
           sx={{ fontSize: "1.2rem", fontWeight: "bold" }}
         >
-          ⚠️ AUH Limit Exceeded! Current: {fiaData?.current_auh} / Limit:{" "}
-          {fiaData?.limit}
+          ⚠️ AUH Limit Exceeded! 
         </Alert>
       </Snackbar>
 
