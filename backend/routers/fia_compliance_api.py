@@ -8,17 +8,20 @@ fia_compliance_repo = FiaComplianceRepository()
 
 @router.websocket("/ws/limit")
 async def websocket_endpoint(websocket: WebSocket):
-
     await websocket.accept()
     websocket_clients.append(websocket)
-    await websocket.send_json({"hello": "sdf"})  # test push
+
+    await websocket.send_json({"hello": "sdf"})
 
     try:
         while True:
-            # keep alive (client can send pings)
-            await websocket.receive_text()
+            # Receive any type of message (text, binary, ping, pong)
+            await websocket.receive()
     except Exception:
-        websocket_clients.remove(websocket)
+        print("Client disconnected")
+    finally:
+        if websocket in websocket_clients:
+            websocket_clients.remove(websocket)
 
 
 @router.get("/currentstatus")
